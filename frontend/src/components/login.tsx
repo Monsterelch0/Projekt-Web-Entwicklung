@@ -19,10 +19,10 @@ export default function Login() {
 
     try {
       const result = await login.execute();
-      setMessage(`Welcome Back, ${result.username}!`);
+      setMessage(`Welcome Back, ${result.first_name}!`);
       // Optional: User-Context setzen
     } catch (err: any) {
-      setMessage(err.message);
+      setMessage('Failed: '+err.message);
     }
   };
 
