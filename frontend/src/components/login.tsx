@@ -6,9 +6,17 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-
+  
+  
+  
   const handleLogin = async () => {
     const login = new LoginCommand(email, password);
+    // Validate input
+    if (!email || !password) {
+      setMessage('Please fill in all fields.');
+      return;
+    }
+
     try {
       const result = await login.execute();
       setMessage(`Welcome Back, ${result.username}!`);

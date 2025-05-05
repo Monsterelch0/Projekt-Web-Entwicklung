@@ -10,23 +10,21 @@ export class LoginCommand {
     });
 
     // Send data to the server
-    console.log('Sende folgende Daten an den Server:', dataToSend);
+   
 
-    const response = await fetch('http://localhost:3000/api/login', {
+    const response = await fetch('https://localhost:3000/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: dataToSend,
     });
 
     if (!response.ok) {
-      throw new Error('Login fehlgeschlagen');
+      const errorText = await response.text();
+      throw new Error(errorText || 'Login failed');
     }
+    
 
     const responseData = await response.json();
-
-    // Answer from Server
-    console.log('Empfangene JSON-Antwort vom Server:', responseData);
-
 
     return responseData;
   }
