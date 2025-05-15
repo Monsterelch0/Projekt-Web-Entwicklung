@@ -30,6 +30,12 @@ namespace api.Migrations
                 {
                     table.PrimaryKey("PK_users", x => x.UserId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_users_Email",
+                table: "users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />

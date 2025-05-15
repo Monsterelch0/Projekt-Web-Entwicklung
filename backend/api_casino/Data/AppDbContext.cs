@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using login.Models;
+using CasinoApp.Models;
 
-namespace login.Data
+namespace CasinoApp.Data
 {
     public class AppDbContext : DbContext
     {
@@ -11,8 +11,7 @@ namespace login.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-       .ToTable("users");
+            modelBuilder.Entity<User>().ToTable("users");
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)

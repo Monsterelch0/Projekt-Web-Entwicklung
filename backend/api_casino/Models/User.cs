@@ -1,24 +1,21 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace login.Models
+namespace CasinoApp.Models
 {
-    [Table("users")] // optional, in case your DB table is lowercase
+    [Table("users")]
     public class User
     {
         [Key]
         public int UserId { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string FirstName { get; set; } = null!;
 
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string LastName { get; set; } = null!;
 
-        [Required]
-        [MaxLength(100)]
+        [Required, MaxLength(100)]
         public string Email { get; set; } = null!;
 
         [Required]
@@ -28,7 +25,6 @@ namespace login.Models
         public decimal Balance { get; set; } = 0;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
         public bool IsActive { get; set; } = true;
     }
 }
