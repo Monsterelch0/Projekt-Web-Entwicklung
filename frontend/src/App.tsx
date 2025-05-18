@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <h1>Wellcome</h1>
-      <Login />
+      <Register />
     </div>
   );
 }

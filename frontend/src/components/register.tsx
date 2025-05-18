@@ -31,7 +31,7 @@ export default function Register() {
 
   return (
     <div>
-      <h2>Registrieren</h2>
+      <h2>Register</h2>
       <input
         type="text"
         placeholder="First Name"
