@@ -11,7 +11,7 @@ export class LoginCommand {
     });
 
     // Send data to the server
-    const response = await fetch('http://localhost:5296', {
+    const response = await fetch('http://localhost:5000', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: dataToSend,

@@ -1,4 +1,3 @@
-// src/components/Login.tsx
 import { useState } from 'react';
 import { LoginCommand } from '../commands/LoginCommand';
 
@@ -6,34 +5,33 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  
-  
-  
+
   const handleLogin = async () => {
     const login = new LoginCommand(email, password);
-    // Validate input
+
     if (!email || !password) {
-      setMessage('Please fill in all fields.');
+      setMessage('Bitte alle Felder ausfüllen.');
       return;
     }
 
     try {
       const result = await login.execute();
-      setMessage(`Welcome Back, ${result.first_name}!`);
-      // Optional: User-Context setzen
+      setMessage(`Willkommen zurück, ${result.first_name}!`);
+      // Optional: Redirect oder User-Kontext
     } catch (err: any) {
-      setMessage('Failed: '+err.message);
+      setMessage('Fehlgeschlagen: ' + err.message);
     }
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       <input
         type="email"
         placeholder="E-Mail"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        className="login-input"
       />
       <br />
       <input
@@ -41,10 +39,13 @@ export default function Login() {
         placeholder="Passwort"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        className="login-input"
       />
       <br />
-      <button onClick={handleLogin}>Einloggen</button>
-      <p>{message}</p>
+      <button onClick={handleLogin} className="login-button">
+        Einloggen
+      </button>
+      <p className="login-message">{message}</p>
     </div>
   );
 }
