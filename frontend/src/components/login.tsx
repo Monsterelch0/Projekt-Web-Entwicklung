@@ -6,9 +6,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  
-  
-  
+
   const handleLogin = async () => {
     const login = new LoginCommand(email, password);
     // Validate input
@@ -19,10 +17,9 @@ export default function Login() {
 
     try {
       const result = await login.execute();
-      setMessage(`Welcome Back, ${result.first_name}!`);
-      // Optional: User-Context setzen
+      setMessage(`Welcome back, ${result.first_name}!`);
     } catch (err: any) {
-      setMessage('Failed: '+err.message);
+      setMessage('Error: ' + err.message);
     }
   };
 
@@ -43,8 +40,11 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
-      <button onClick={handleLogin}>Einloggen</button>
-      <p>{message}</p>
+      <button onClick={handleLogin}>Login</button>
+      <br />
+            <p>{message}</p>
+      {/* hier fehlt routing */}
+      <button>Want to Register insted</button>
     </div>
   );
 }
