@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CasinoApp.Models;
-using CasinoApp.Interfaces;
+using CasinoApp.Services;
 
 namespace CasinoApp.Controllers
 {
@@ -8,18 +8,40 @@ namespace CasinoApp.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly UserService _userService;
 
-        public UserController(IUnitOfWork unitOfWork)
+        public UserController(UserService userService)
         {
-            _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
-        [HttpGet("{email}")]
-        public async Task<IActionResult> GetUser(string email)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-            var user = await _unitOfWork.Users.GetByEmailAsync(email);
-            return user == null ? NotFound() : Ok(user);
+            var user = await _userService.AuthenticateAsync(request.Email, request.Password);
+
+            if (user == null)
+                return Unauthorized(new { message = "E-Mail oder Passwort falsch" });
+
+            return Ok(new
+            {
+                message = "Login erfolgreich",
+                userId = user.UserId,
+                email = user.Email,
+                firstName = user.FirstName
+            });
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
+        {
+            var (success, message) = await _userService.RegisterAsync(request);
+
+            if (!success)
+                return BadRequest(new { message });
+
+            return Ok(new { message });
+        }
+
     }
 }
