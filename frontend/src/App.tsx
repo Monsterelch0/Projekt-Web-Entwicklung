@@ -1,6 +1,7 @@
 // src/App.tsx
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/login';    // Assuming this is your login component
+import LoginConcept from './components/loginconcept';    // Assuming this is your login component
 import HomePage from './components/HomePage'; // Assuming this is your main page component
 import './App.css';
 
@@ -9,6 +10,7 @@ export default function App() {
     <Routes>
       {/* Route for the Login page - often the default or a specific path like /login */}
       <Route path="/login" element={<Login />} />
+      <Route path="/loginconcept" element={<LoginConcept />} />
 
       {/* Route for the Home Page (or main page) */}
       {/* You might want this to be the root path AFTER login,
