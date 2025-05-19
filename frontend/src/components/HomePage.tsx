@@ -24,7 +24,7 @@ export default function HomePage() {
       <div style={{ textAlign: 'right', padding: '10px' }}>
         💰 Credits: {credits}
       </div>
-      <h1>Willkommen im Casino</h1>
+      <h1>Welcome</h1>
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
         {games.map((game) => (
           <button key={game.id} onClick={() => navigate(`/game/${game.id}`)}>
