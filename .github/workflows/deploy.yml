@@ -35,17 +35,11 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/casino-frontend
-          docker pull ${{ secrets.DOCKER_USERNAME }}/casino-backend
+         cd ~/casino-project # falls dein Projektordner dort liegt
 
-          docker stop frontend backend || true
-          docker rm frontend backend || true
+          git pull origin main
 
-          docker run -d --name frontend -p 5173:5173 ${{ secrets.DOCKER_USERNAME }}/casino-frontend
-          docker run -d --name backend \
-          -p 5296:5296 \
-          -e "ASPNETCORE_ENVIRONMENT=Production" \
-          -e "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
-          ${{ secrets.DOCKER_USERNAME }}/casino-backend \
-          dotnet api_casino.dll --urls=http://+:5296
+          docker compose pull frontend backend || true
 
+          docker compose down --remove-orphans
+          docker compose up -d --build
