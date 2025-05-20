@@ -79,13 +79,17 @@ export default function Login() {
         {message && <p className="login-message">{message}</p>}
       </form>
       <div className='PlatformSignIn'>
-        <p>or sign in with:</p>
-        <button className="login-button" onClick={() => alert('Google Sign-In not implemented yet!')}>
-          <img src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw" width="20" height="20"/>
-        </button>
-        <button className="login-button" onClick={() => alert('Facebook Sign-In not implemented yet!')}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/960px-Facebook_Logo_%282019%29.png" width="20" height="20" />
-        </button>
+        <div>
+          <button className="login-button" onClick={() => alert('Google Sign-In not implemented yet!')}>
+            <img src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw" width="20" height="20"/>
+          </button>
+        </div>
+        <div>
+          <button className="login-button" onClick={() => alert('Facebook Sign-In not implemented yet!')}>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/960px-Facebook_Logo_%282019%29.png" width="20" height="20" />
+          </button>
+        </div>
+        
       </div>
     </div>
   );
