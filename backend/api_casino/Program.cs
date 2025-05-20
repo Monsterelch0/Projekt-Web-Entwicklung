@@ -38,8 +38,11 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-app.UseCors("AllowFrontend");  
+
+app.UseRouting(); 
+app.UseCors("AllowFrontend"); 
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.Run();
