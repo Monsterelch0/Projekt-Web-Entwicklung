@@ -28,7 +28,7 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend/api_casino
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-backend
 
-    - name: Deploy to Server using docker-compose.yml from repo
+    - name: Deploy to Server using docker-compose.yml
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.HOST }}
@@ -44,6 +44,6 @@ jobs:
           cd casino-deploy
           git pull origin main
 
-          docker compose pull
-          docker compose down --remove-orphans
-          docker compose up -d
+          docker compose --env-file .env pull
+          docker compose --env-file .env down --remove-orphans
+          docker compose --env-file .env up -d
