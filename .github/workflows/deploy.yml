@@ -23,11 +23,11 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-frontend ./frontend
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-frontend
 
-     - name: Build and Push Backend Image
+    - name: Build and Push Backend Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend/api_casino
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-backend
-        
+
     - name: Deploy to Server
       uses: appleboy/ssh-action@v1.0.0
       with:
@@ -42,4 +42,9 @@ jobs:
           docker rm frontend backend || true
 
           docker run -d --name frontend -p 5173:5173 ${{ secrets.DOCKER_USERNAME }}/casino-frontend
-          docker run -d --name backend -p 5296:5296 ${{ secrets.DOCKER_USERNAME }}/casino-backend dotnet api_casino.dll --urls=http://+:5296
+          docker run -d --name backend \
+          -p 5296:5296 \
+          -e "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
+          ${{ secrets.DOCKER_USERNAME }}/casino-backend \
+          dotnet api_casino.dll --urls=http://+:5296
+
