@@ -23,11 +23,11 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-frontend ./frontend
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-frontend
 
-    - name: Build and Push Backend Image (placeholder)
+     - name: Build and Push Backend Image
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-backend
-
+        
     - name: Deploy to Server
       uses: appleboy/ssh-action@v1.0.0
       with:
@@ -37,7 +37,9 @@ jobs:
         script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/casino-frontend
           docker pull ${{ secrets.DOCKER_USERNAME }}/casino-backend
+
           docker stop frontend backend || true
           docker rm frontend backend || true
-          docker run -d --name frontend -p 80:80 ${{ secrets.DOCKER_USERNAME }}/casino-frontend
-          docker run -d --name backend -p 4000:4000 ${{ secrets.DOCKER_USERNAME }}/casino-backend
+
+          docker run -d --name frontend -p 5173:5173 ${{ secrets.DOCKER_USERNAME }}/casino-frontend
+          docker run -d --name backend -p 5296:5296 ${{ secrets.DOCKER_USERNAME }}/casino-backend dotnet api_casino.dll --urls=http://+:5296
