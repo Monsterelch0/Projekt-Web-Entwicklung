@@ -98,3 +98,9 @@ p {
   margin-top: 1rem;
   color: #ff6666;
 }
+
+.PlatformSignIn {
+  display: flex;
+  gap : 1rem;
+  justify-content: center;
+}
