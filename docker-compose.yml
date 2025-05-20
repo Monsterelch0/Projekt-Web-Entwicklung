@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   frontend:
-    image: $DOCKER_USERNAME/casino-frontend
+    image: monsterelch/casino-frontend
     ports:
       - "5173:5173"
     environment:
       - NODE_ENV=production
 
   backend:
-    image: $DOCKER_USERNAME/casino-backend
+    image: monsterelch/casino-backend
     ports:
       - "5296:5296"
     environment:
