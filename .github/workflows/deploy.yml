@@ -45,4 +45,6 @@ jobs:
           docker run -d --name backend \
           -p 5296:5296 \
           -e "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
-          ${{ secrets.DOCKER_USERNAME }}/casino-backend
+          ${{ secrets.DOCKER_USERNAME }}/casino-backend \
+          dotnet api_casino.dll --urls=http://+:5296
+
