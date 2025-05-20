@@ -38,7 +38,7 @@ jobs:
           cd ~
 
           if [ ! -d "casino-deploy" ]; then
-            git clone https://github.com/${{ github.repository }} casino-deploy
+            git clone https://${{ secrets.GIT_TOKEN }}@github.com/${{ github.repository }} casino-deploy
           fi
 
           cd casino-deploy
