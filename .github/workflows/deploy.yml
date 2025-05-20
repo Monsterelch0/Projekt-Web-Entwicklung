@@ -28,24 +28,27 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend/api_casino
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-backend
 
-    - name: Deploy to Server
+    - name: Deploy to Server using docker-compose.yml
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/casino-frontend
-          docker pull ${{ secrets.DOCKER_USERNAME }}/casino-backend
+           cd ~
 
-          docker stop frontend backend || true
-          docker rm frontend backend || true
+            if [ ! -d "casino-deploy" ]; then
+            git -c credential.helper= clone https://${{ secrets.GIT_TOKEN }}@github.com/${{ github.repository }} casino-deploy
+            fi
 
-          docker run -d --name frontend -p 5173:5173 ${{ secrets.DOCKER_USERNAME }}/casino-frontend
-          docker run -d --name backend \
-          -p 5296:5296 \
-          -e "ASPNETCORE_ENVIRONMENT=Production" \
-          -e "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
-          ${{ secrets.DOCKER_USERNAME }}/casino-backend \
-          dotnet api_casino.dll --urls=http://+:5296
+            cd casino-deploy
+            git pull origin main
 
+            # .env erzeugen, falls nicht vorhanden
+            if [ ! -f ".env" ]; then
+            echo "DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}" > .env
+            fi
+
+            docker compose --env-file .env pull
+            docker compose --env-file .env down --remove-orphans
+            docker compose --env-file .env up -d
