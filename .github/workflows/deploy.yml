@@ -28,18 +28,22 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend/api_casino
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-backend
 
-    - name: Deploy to Server
+    - name: Deploy to Server using docker-compose.yml from repo
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-         cd ~/casino-project # falls dein Projektordner dort liegt
+          cd ~
 
+          if [ ! -d "casino-deploy" ]; then
+            git clone https://github.com/${{ github.repository }} casino-deploy
+          fi
+
+          cd casino-deploy
           git pull origin main
 
-          docker compose pull frontend backend || true
-
+          docker compose pull
           docker compose down --remove-orphans
-          docker compose up -d --build
+          docker compose up -d
