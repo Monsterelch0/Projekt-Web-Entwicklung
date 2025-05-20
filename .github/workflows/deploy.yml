@@ -23,11 +23,11 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-frontend ./frontend
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-frontend
 
-    - name: Build and Push Backend Image
+     - name: Build and Push Backend Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend/api_casino
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-backend ./backend
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-backend
-
+        
     - name: Deploy to Server
       uses: appleboy/ssh-action@v1.0.0
       with:
