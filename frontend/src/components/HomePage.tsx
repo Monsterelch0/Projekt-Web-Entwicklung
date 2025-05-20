@@ -25,7 +25,7 @@ export default function HomePage() {
         💰 Credits: {credits}
       </div>
       <h1>Welcome</h1>
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
         {games.map((game) => (
           <button key={game.id} onClick={() => navigate(`/game/${game.id}`)}>
             🎲 {game.name}
