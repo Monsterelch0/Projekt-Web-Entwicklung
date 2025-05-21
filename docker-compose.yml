@@ -2,20 +2,17 @@ version: '3.8'
 
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: monsterelch/casino-frontend
     ports:
       - "5173:5173"
     environment:
       - NODE_ENV=production
 
   backend:
-    build:
-      context: ./backend/api_casino
-      dockerfile: Dockerfile
+    image: monsterelch/casino-backend
     ports:
       - "5296:5296"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
     command: ["dotnet", "api_casino.dll", "--urls", "http://+:5296"]
