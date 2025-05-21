@@ -40,12 +40,15 @@ builder.WebHost.UseUrls("http://0.0.0.0:5296");
 var app = builder.Build();
 
 // Swagger
+...
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = "swagger"; // oder "" für root
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Casino API v1");
+    c.RoutePrefix = "swagger";
 });
+
 
 // Middleware pipeline
 //app.UseHttpsRedirection(); // Optional, nur wenn du HTTPS in Docker aktiv hast
