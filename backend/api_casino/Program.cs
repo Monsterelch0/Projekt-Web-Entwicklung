@@ -6,50 +6,47 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure database
+// Database config
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register services and repositories
+// Dependency Injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<UserService>();
 
-// Allow connections from your frontend
+// CORS setup for your production frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173") // Ändere das ggf. zu deiner produktiven URL
+            .WithOrigins("https://joshiidkwhy.de")
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // Falls Frontend Cookies oder Tokens mitschickt
+            .AllowCredentials(); // Nur nötig, wenn Cookies/Auth verwendet werden
     });
 });
 
-// Bind to external IP for Docker
+// Listen on all IPs/ports inside Docker
 builder.WebHost.UseUrls("http://0.0.0.0:5296");
 
 var app = builder.Build();
 
-// Enable Swagger in all environments (optional: restrict to dev)
+// Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
 
 // Middleware pipeline
-app.UseHttpsRedirection(); // Optional – entfernt bei Bedarf
+//app.UseHttpsRedirection(); // Optional, nur wenn du HTTPS in Docker aktiv hast
 app.UseRouting();
-
 app.UseCors("AllowFrontend");
-
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
