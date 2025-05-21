@@ -47,6 +47,11 @@ app.UseSwaggerUI();
 app.UseRouting();
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"Incoming request: {context.Request.Method} {context.Request.Path}");
+    await next();
+});
 
 app.MapControllers();
 app.Run();
