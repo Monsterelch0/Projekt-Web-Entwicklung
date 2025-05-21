@@ -40,7 +40,11 @@ var app = builder.Build();
 
 // Swagger
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = "swagger"; // oder "" für root
+});
 
 // Middleware pipeline
 //app.UseHttpsRedirection(); // Optional, nur wenn du HTTPS in Docker aktiv hast
