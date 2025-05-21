@@ -9,15 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Casino API",
-        Version = "v1",
-        Description = "API for user registration, login etc."
-    });
-});
+builder.Services.AddSwaggerGen();
 
 
 // Database config
