@@ -13,19 +13,20 @@ export class LoginCommand {
     });
 
     // Send data to the server
-    const response = await fetch(`${API_URL}/api/users/login`, {
+    try {
+      const response = await fetch(`http://37.60.247.121:5296/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: dataToSend,
-    });
-    // Check the response
-    if (!response.ok) {
+      });
+      if (!response.ok) {
       const errorText = await response.text();
       throw new Error(errorText || 'Login failed');
     }
-    
     const responseData = await response.json();
 
     return responseData;
+    } catch (error) { 
+    }
   }
 }
