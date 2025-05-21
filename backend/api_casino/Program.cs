@@ -40,8 +40,6 @@ builder.WebHost.UseUrls("http://0.0.0.0:5296");
 var app = builder.Build();
 
 // Swagger
-...
-
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
