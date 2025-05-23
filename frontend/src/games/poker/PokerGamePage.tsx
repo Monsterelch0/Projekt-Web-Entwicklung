@@ -1,16 +1,14 @@
 // src/games/poker/PokerGamePage.tsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { pokerGameService } from '../poker/PokerGameService'; // Pfad zum PokerGameService
-import type { GameStateDto } from '../../types'; // Pfad zur globalen types.ts
+import { useNavigate } from 'react-router-dom'; // Du hast dies hinzugefügt
+import { pokerGameService } from '../poker/PokerGameService';
+import type { GameStateDto } from '../../types';
 import PokerPlayerComponent from './components/PokerPlayerComponent';
 import PokerCardComponent from './components/PokerCardComponent';
 import './Poker.css'; // Import the CSS file
 
-// const buttonStyle is removed as styles are now in Poker.css
-
 const PokerGamePage: React.FC = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // useNavigate ist jetzt hier
     const [gameState, setGameState] = useState<GameStateDto | null>(pokerGameService.getGameState());
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -18,9 +16,9 @@ const PokerGamePage: React.FC = () => {
     const handleGameStateUpdate = useCallback((newState: GameStateDto | null) => {
         setGameState(newState);
         setIsLoading(false);
-        if (newState === null && pokerGameService.getGameState() === null) {
-            //setError handling is done in service call catch blocks
-        }
+        // if (newState === null && pokerGameService.getGameState() === null) {
+        //     // Error handling done in service call catch blocks or by checking error state
+        // }
     }, []);
 
     useEffect(() => {
@@ -34,7 +32,7 @@ const PokerGamePage: React.FC = () => {
         setIsLoading(true);
         setError(null);
         try {
-            await pokerGameService.startOfflineGame("Human", 1);
+            await pokerGameService.startOfflineGame("Human", 1); // Habe auf 1 KI Gegner reduziert für einfachere Tests
         } catch (e: any) {
             setError(e.message || "Spiel konnte nicht gestartet werden. Backend erreichbar?");
             console.error("Fehler in handleStartGame:", e);
@@ -54,7 +52,7 @@ const PokerGamePage: React.FC = () => {
         }
     };
 
-    if (isLoading) {
+    if (isLoading && !gameState) { // Zeige Ladeindikator nur, wenn noch kein gameState vorhanden ist
         return <p className="poker-loading-text">Spiel wird geladen...</p>;
     }
 
@@ -63,6 +61,9 @@ const PokerGamePage: React.FC = () => {
             <div className="poker-error-container">
                 <p className="poker-error-message">Fehler: {error}</p>
                 <button onClick={handleStartGame} className="poker-button">Erneut versuchen</button>
+                <button onClick={() => navigate('/home')} className="poker-button poker-button-secondary" style={{marginLeft: '10px'}}>
+                    Zurück zur Lobby
+                </button>
             </div>
         );
     }
@@ -71,19 +72,22 @@ const PokerGamePage: React.FC = () => {
         return (
             <div className="poker-welcome-container">
                 <h1>Willkommen zum Poker!</h1>
-                <button
-                    onClick={() => navigate('/home')}
-                    className="poker-button poker-button-large-font poker-button-float-right poker-button-margin-right"
-                >
-                    Back to Lobby
-                </button>
-                <button
-                    onClick={handleStartGame}
-                    disabled={isLoading}
-                    className="poker-button poker-button-large-font"
-                >
-                    Offline Spiel starten
-                </button>
+                <div style={{marginTop: '20px'}}>
+                    <button
+                        onClick={handleStartGame}
+                        disabled={isLoading}
+                        className="poker-button poker-button-large-font poker-button-primary" // Primärer Aktionsbutton
+                        style={{marginRight: '10px'}}
+                    >
+                        Offline Spiel starten
+                    </button>
+                    <button
+                        onClick={() => navigate('/home')} // Navigiert zur Home-Seite
+                        className="poker-button poker-button-large-font poker-button-secondary"
+                    >
+                        Zurück zur Lobby
+                    </button>
+                </div>
             </div>
         );
     }
@@ -112,12 +116,32 @@ const PokerGamePage: React.FC = () => {
                     <button
                         onClick={handleNextPhase}
                         disabled={isLoading}
-                        className="poker-button poker-button-warning"
+                        className="poker-button poker-button-warning" // 'Warning' für Aktionsbutton
                     >
-                        {nextPhaseButtonText}
+                        {isLoading && gameState.currentGamePhase !== "Lobby" ? 'Lade...' : nextPhaseButtonText}
                     </button>
                 )}
+                 <button 
+                    onClick={() => navigate('/home')} 
+                    className="poker-button poker-button-secondary poker-button-float-right"
+                    style={{marginLeft: 'auto'}} // Um ihn nach rechts zu schieben
+                >
+                    Zurück zur Lobby
+                </button>
             </div>
+
+            {/* === NEU: ANZEIGE DER GEWINNERINFORMATIONEN === */}
+            {gameState.currentGamePhase === "Showdown" && gameState.winningHandDescription && (
+                <div className="poker-showdown-info-box"> {/* Eigene Klasse für Styling */}
+                    <h2 className="poker-showdown-title">🏆 Showdown! 🏆</h2>
+                    <p className="poker-winning-hand-text">{gameState.winningHandDescription}</p>
+                    {gameState.winnerIds && gameState.winnerIds.length > 0 && (
+                        <p className="poker-winners-text">
+                            <strong>Gewinner:</strong> {gameState.winnerIds.join(', ')}
+                        </p>
+                    )}
+                </div>
+            )}
 
             <div className="poker-community-cards-section">
                 <h2 className="poker-section-title">Community Cards</h2>
@@ -138,8 +162,6 @@ const PokerGamePage: React.FC = () => {
 
             <div className="poker-game-info-box">
                 <p><strong>Spielphase:</strong> {gameState.currentGamePhase}</p>
-                {/* <p><strong>Pot:</strong> {gameState.pot}</p> */}
-                {/* <p><strong>Am Zug:</strong> {gameState.currentPlayerTurnId || "Niemand"}</p> */}
             </div>
         </div>
     );

@@ -1,22 +1,19 @@
 // src/types.ts
 
-// Basierend auf deinen Backend CardDto
 export interface CardDto {
     suit: string;
     rank: string;
     displayName: string;
 }
 
-// Basierend auf deinen Backend PlayerDto
 export interface PlayerDto {
     id: string;
     hand: CardDto[];
     chips: number;
     isActive: boolean;
-    isAI?: boolean; // NEU HINZUGEFÜGT (oder sicherstellen, dass es da ist)
+    isAI?: boolean; 
 }
 
-// Basierend auf deinen Backend GameStateDto
 export interface GameStateDto {
     gameId: string;
     players: PlayerDto[];
@@ -24,4 +21,7 @@ export interface GameStateDto {
     pot: number;
     currentPlayerTurnId: string | null;
     currentGamePhase: string;
+    // NEUE FELDER für Gewinnerinformationen:
+    winnerIds?: string[];           // Liste der IDs der Gewinner (für Split Pots)
+    winningHandDescription?: string; // Beschreibung der Gewinnerhand
 }
