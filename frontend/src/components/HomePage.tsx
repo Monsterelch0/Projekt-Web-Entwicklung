@@ -13,7 +13,6 @@ export default function HomePage() {
   const [games, setGames] = useState<GameModule[]>([]);
   const navigate = useNavigate();
 
-  // === FACTORY PATTERN ===
   useEffect(() => {
     const availableGames = GameFactory.createAvailableGames();
     setGames(availableGames);
@@ -27,8 +26,10 @@ export default function HomePage() {
       <h1>Welcome</h1>
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
         {games.map((game) => (
-          <button key={game.id} onClick={() => navigate(`/game/${game.id}`)}>
-            🎲 {game.name}
+          <button key={game.id} onClick={() => navigate(`/game/${game.id}`)}
+            style={{padding: '10px 20px', fontSize: '1rem', cursor: 'pointer'}}
+          >
+            {game.icon} {game.name}
           </button>
         ))}
       </div>
@@ -43,6 +44,8 @@ class GameFactory {
       { id: 'slots', name: 'Slot Machine', icon: '🎰' },
       { id: 'high-low', name: 'High-Low', icon: '🎯' },
       { id: 'blackjack', name: 'Blackjack', icon: '🃏' },
+      { id: 'roulette', name: 'Roulette', icon: '🎡' }, // NEU
+      { id: 'bonus-wheel', name: 'Bonus Wheel', icon: '🌟' }, // NEU
     ];
   }
 }
