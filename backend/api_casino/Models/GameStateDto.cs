@@ -12,6 +12,8 @@ namespace CasinoApp.Models // Stelle sicher, dass dieser Namespace korrekt ist
         public int Pot { get; set; }
         public string? CurrentPlayerTurnId { get; set; } // ID des Spielers, der am Zug ist (kann null sein)
         public string CurrentGamePhase { get; set; } // z.B. "PreFlop", "Flop", "Turn", "River", "Showdown"
+        public List<string> WinnerIds { get; set; } // NEU
+        public string WinningHandDescription { get; set; } // NEU
 
         public GameStateDto()
         {
@@ -19,6 +21,8 @@ namespace CasinoApp.Models // Stelle sicher, dass dieser Namespace korrekt ist
             CommunityCards = new List<CardDto>();
             GameId = string.Empty; // Initialisieren, um Null-Referenzen zu vermeiden
             CurrentGamePhase = string.Empty;
+            WinnerIds = new List<string>(); // Initialisieren
+            WinningHandDescription = string.Empty; // Initialisieren
         }
     }
 

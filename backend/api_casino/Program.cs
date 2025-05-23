@@ -11,9 +11,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// builder.Services.AddSingleton<IDeck, Deck>(); // Nur wenn Deck NICHT statisch ist und injiziert werden soll
-builder.Services.AddScoped<ICardFactory, CardFactory>();
+builder.Services.AddSingleton<IDeck, Deck>(); // Registriert Deck als Singleton für IDeck
+builder.Services.AddSingleton<ICardFactory, CardFactory>(); // CardFactory kann auch Singleton oder Scoped/Transient sein
+
+
 builder.Services.AddScoped<IPokerGameService, PokerGameService>();
+builder.Services.AddScoped<IHandEvaluatorService, HandEvaluatorService>();
+builder.Services.AddScoped<ICardFactory, CardFactory>();
 
 
 // Database config

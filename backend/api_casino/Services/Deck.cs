@@ -1,63 +1,62 @@
-using CasinoApp.Interfaces;
-using CasinoApp.Models;
+// CasinoApp/Services/Deck.cs
+using CasinoApp.Interfaces; // Für IDeck und ICardFactory
+using CasinoApp.Models;    // Für Card, Suit, Rank
 using System;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 
 namespace CasinoApp.Services
 {
-    public class Deck : IDeck
+    public class Deck : IDeck // Implementiert IDeck
     {
-        
-        private static readonly Lazy<Deck> instance = new Lazy<Deck>(() => new Deck());
+        private List<Card> _cards; // Umbenannt von 'cards' zu '_cards' (übliche Konvention für private Felder)
+        private readonly ICardFactory _cardFactory; // Sollte per DI kommen
+        private readonly Random _random = new Random();
 
-        private List<Card> cards;
-        private readonly ICardFactory cardFactory; 
-        private readonly Random random = new Random();
-
-        
-        public static Deck Instance => instance.Value;
-
-       
-        private Deck()
+        // Konstruktor, der ICardFactory per Dependency Injection erhält
+        public Deck(ICardFactory cardFactory)
         {
-            this.cardFactory = new CardFactory();
+            _cardFactory = cardFactory ?? throw new ArgumentNullException(nameof(cardFactory));
+            _cards = new List<Card>(); // Initialisiere _cards hier oder in InitializeDeck
             InitializeDeck();
         }
 
         private void InitializeDeck()
         {
-            this.cards = this.cardFactory.CreateStandardDeck();
-            Shuffle();
-        } 
+            _cards = _cardFactory.CreateStandardDeck(); // Erstellt ein volles Deck über die Factory
+            Shuffle(); // Direkt mischen
+        }
 
         public void Shuffle()
         {
-            int n = cards.Count;
+            int n = _cards.Count;
             while (n > 1)
             {
                 n--;
-                int k = random.Next(n + 1);
-                (cards[k], cards[n]) = (cards[n], cards[k]);
+                int k = _random.Next(n + 1);
+                // Tausche Karten (moderner Tuple-Swap)
+                (_cards[k], _cards[n]) = (_cards[n], _cards[k]);
             }
         }
 
         public Card? DealCard()
         {
-            if (cards.Count == 0)
+            if (_cards.Count == 0)
             {
-              
+                // Optional: Deck neu initialisieren und mischen oder Fehler/null zurückgeben
+                // InitializeDeck(); 
                 return null;
             }
 
-            Card cardToDeal = cards[0];
-            cards.RemoveAt(0);
+            Card cardToDeal = _cards[0];
+            _cards.RemoveAt(0);
             return cardToDeal;
         }
 
-        public int CardsRemaining => cards.Count;
+        public int CardsRemaining => _cards.Count;
 
-        
+        // Diese Methode ist wichtig, um das Deck für eine neue Runde/Spiel zurückzusetzen,
+        // da die Instanz jetzt ein Singleton ist und ihren Zustand beibehält.
         public void ResetDeck()
         {
             InitializeDeck();

@@ -6,8 +6,9 @@ namespace CasinoApp.Models
     {
         public string Id { get; set; }
         public List<Card> Hand { get; private set; }
-        public int Chips { get; set; } 
-        public bool IsAI { get; set; } 
+        public int Chips { get; set; }
+        public bool IsAI { get; set; }
+        public bool IsActive { get; set; }
 
         public Player(string id, int initialChips, bool isAI = false)
         {
@@ -15,6 +16,7 @@ namespace CasinoApp.Models
             Chips = initialChips;
             IsAI = isAI;
             Hand = new List<Card>();
+            IsActive = true;
         }
 
         public void AddCardToHand(Card card)
