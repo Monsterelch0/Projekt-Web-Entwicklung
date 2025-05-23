@@ -48,7 +48,7 @@ export default function NotFoundPage() {
         onMouseOver={e => (e.currentTarget.style.backgroundColor = '#0056b3')}
         onMouseOut={e => (e.currentTarget.style.backgroundColor = '#007bff')}
       >
-        Zurück zur Startseite
+        Back to Home
       </Link>
     </div>
   );
