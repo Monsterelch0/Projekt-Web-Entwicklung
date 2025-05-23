@@ -1,10 +1,11 @@
 # frontend/Dockerfile
-ARG VITE_API_URL_ARG
-ENV VITE_API_URL=$VITE_API_URL_ARG
 # 1. Build-Phase
 FROM node:18 AS build-stage
 WORKDIR /app
 
+
+ARG VITE_API_URL_ARG
+ENV VITE_API_URL=$VITE_API_URL_ARG
 # Installiere pnpm global im Image
 RUN npm install -g pnpm
 
