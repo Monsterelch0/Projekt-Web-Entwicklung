@@ -14,7 +14,7 @@ export class LoginCommand {
 
     // Send data to the server
     try {
-      const response = await fetch(`http://37.60.247.121:5296/api/users/login`, {
+      const response = await fetch(``, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: dataToSend,

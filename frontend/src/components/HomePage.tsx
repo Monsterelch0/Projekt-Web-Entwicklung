@@ -36,12 +36,12 @@ export default function HomePage() {
   );
 }
 
-// === Factory Pattern Beispiel ===
+// === Factory Pattern ===
 class GameFactory {
   static createAvailableGames(): GameModule[] {
     return [
       { id: 'slots', name: 'Slot Machine', icon: '🎰' },
-      { id: 'roulette', name: 'Roulette', icon: '🎯' },
+      { id: 'high-low', name: 'High-Low', icon: '🎯' },
       { id: 'blackjack', name: 'Blackjack', icon: '🃏' },
     ];
   }
