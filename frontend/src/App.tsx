@@ -4,7 +4,7 @@ import Login from './components/login';
 import LoginConcept from './components/loginconcept';
 import HomePage from './components/HomePage';
 
-// Importiere die neuen Spieleseiten-Komponenten
+// Importiere Spieleseiten
 import SlotMachinePage from './games/slots/SlotMachinePage';
 import HighLowPage from './games/high-low/HighLowPage';
 import BlackjackPage from './games/blackjack/BlackjackPage';
