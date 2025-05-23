@@ -26,7 +26,7 @@ COPY . .
 RUN pnpm run build
 
 # 2. Run-Phase (leichter Webserver für die statischen Dateien aus dem Build)
-FROM node:18-alpine # Verwende ein leichtes Image für die Run-Phase
+FROM node:18-alpine 
 
 # Installiere 'serve' global, um die statischen Dateien auszuliefern
 RUN npm install -g serve
