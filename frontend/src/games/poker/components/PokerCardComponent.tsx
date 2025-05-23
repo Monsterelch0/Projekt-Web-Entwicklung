@@ -10,8 +10,8 @@ interface PokerCardProps {
 // Diese Konstante wird exportiert, damit andere Komponenten (z.B. für Kartenrücken)
 // dieselben Dimensionen verwenden können, um Einheitlichkeit zu gewährleisten.
 export const pokerCardDimensions = {
-    width: '10%',
-    height: '10%',
+    width: '120px',
+    height: '200px',
     margin: '5px',
 };
 
@@ -67,8 +67,8 @@ const PokerCardComponent: React.FC<PokerCardProps> = ({ card }) => {
                     width: '100%', // Bild füllt den Container in der Breite
                     height: '100%',// Bild füllt den Container in der Höhe
                     objectFit: 'contain', // Behält das Seitenverhältnis des Bildes bei
-                    border: '1px solid #aaa', // Dezenter Rand um das Bild
-                    borderRadius: '4px',     // Abgerundete Ecken für das Bild
+                    border: '0px solid #aaa', // Dezenter Rand um das Bild
+                    borderRadius: '3px',     // Abgerundete Ecken für das Bild
                     boxShadow: '1px 1px 3px rgba(0,0,0,0.2)' // Leichter Schatten
                 }}
                 onError={(e) => {
