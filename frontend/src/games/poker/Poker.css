@@ -1,0 +1,154 @@
+/* General Page Layout */
+.poker-game-page-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #333; /* Default text color for better readability on light backgrounds */
+}
+
+/* Loading and Error States */
+.poker-loading-text {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.poker-error-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.poker-error-message {
+    color: red;
+    margin-bottom: 15px;
+}
+
+/* Welcome/Lobby State */
+.poker-welcome-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.poker-welcome-container h1 {
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.poker-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #eee;
+    color: #333;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.poker-button:hover {
+    background-color: #ddd;
+    border-color: #bbb;
+}
+
+.poker-button:disabled {
+    background-color: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+.poker-button-large-font {
+    font-size: 18px;
+}
+
+.poker-button-margin-right {
+    margin-right: 10px;
+}
+
+.poker-button-float-right {
+    float: right;
+}
+
+.poker-button-warning {
+    background-color: #ffc107; /* Yellowish for warning/next phase */
+    border-color: #f8b200;
+}
+
+.poker-button-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Game Specific Sections */
+.poker-table-title {
+    text-align: center;
+    color: #DAA520; /* Gold color, slightly darker than #ffd700 for better contrast on white */
+    margin-bottom: 25px;
+}
+
+.poker-actions-bar {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.poker-community-cards-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #4CAF50; /* Green border */
+    border-radius: 8px;
+    background-color: #2E7D32; /* Darker green background */
+    color: white;
+}
+
+.poker-section-title { /* Common title for sections like community cards, players */
+    text-align: center;
+    color: white;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.poker-community-cards-empty-text {
+    text-align: center;
+    color: lightgrey;
+    font-style: italic;
+}
+
+.poker-community-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 120px; /* Assuming PokerCardComponent has a fixed height */
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Spacing between cards */
+}
+
+.poker-players-title { /* Can reuse poker-section-title if styling is identical or make specific */
+    text-align: center;
+    /* color: #333; Assuming players section is not on a dark background like community cards */
+    /* If players section background changes, adjust this color */
+    margin-bottom: 15px;
+}
+
+.poker-players-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing between player components */
+}
+
+.poker-game-info-box {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.poker-game-info-box p {
+    margin: 5px 0;
+}
+
+.poker-game-info-box strong {
+    color: #555;
+}

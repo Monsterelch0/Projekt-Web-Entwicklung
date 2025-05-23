@@ -54,7 +54,7 @@ export default function RoulettePage() {
 
   return (
     <div style={pageStyle}>
-      <button onClick={() => navigate('/')} style={{ ...buttonStyle, float: 'right' }}>Back to Lobby</button>
+      <button onClick={() => navigate('/home')} style={{ ...buttonStyle, float: 'right' }}>Back to Lobby</button>
       <h1>🎡 Roulette 🎡</h1>
       <p>Balance: ${game.balance}</p>
       <p style={{minHeight: '40px'}}>{game.message}</p>
