@@ -28,6 +28,7 @@ export default function App() {
         <Route path="/game/slots" element={<SlotMachinePage />} />
         <Route path="/game/high-low" element={<HighLowPage />} />
         <Route path="/game/blackjack" element={<BlackjackPage />} />
+        <Route path="/game/roulette" element={<RoulettePage />} />
         <Route path="/game/poker" element={<PokerGamePage />} />
 
         {/* Optionale Catch-All Route für nicht definierte Pfade */}
