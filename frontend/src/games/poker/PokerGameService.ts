@@ -4,11 +4,10 @@ import type { GameStateDto } from '../../types';
 
 // Lese die API-URL aus den Vite-Umgebungsvariablen.
 // Gib einen Standardwert an, falls die Variable nicht gesetzt ist.
-const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5296'; 
-const API_POKER_PATH = '/api/poker'; // Der spezifische Pfad für die Poker-API
+import { POKER_API_ENDPOINT_BASE } from '../../config';
 
 // Für Debugging-Zwecke, um zu sehen, welche URL verwendet wird:
-console.log(`[PokerGameService] Effective Backend URL for Poker: ${BACKEND_BASE_URL}${API_POKER_PATH}`);
+console.log(`[PokerGameService] Effective Backend URL for Poker: ${POKER_API_ENDPOINT_BASE}`);
 
 class PokerGameService {
     private gameState: GameStateDto | null = null;
@@ -32,7 +31,7 @@ class PokerGameService {
     public async startOfflineGame(humanPlayerName?: string, numberOfAICopponents?: number): Promise<void> {
         try {
             // KORRIGIERTE URL-Konstruktion:
-            let url = `${BACKEND_BASE_URL}${API_POKER_PATH}/startofflinegame`; 
+             let url = `${POKER_API_ENDPOINT_BASE}/startofflinegame`;
             const params = new URLSearchParams();
             if (humanPlayerName) {
                 params.append('humanPlayerName', humanPlayerName);
@@ -65,7 +64,7 @@ class PokerGameService {
         }
         try {
             // KORRIGIERTE URL-Konstruktion:
-            const response = await axios.post<GameStateDto>(`${BACKEND_BASE_URL}${API_POKER_PATH}/${gameId}/nextphase`); 
+             const response = await axios.post<GameStateDto>(`${POKER_API_ENDPOINT_BASE}/${gameId}/nextphase`);
             this.gameState = response.data;
             this.notify(); 
         } catch (error) {
