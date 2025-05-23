@@ -1,7 +1,7 @@
 # frontend/Dockerfile
 
 # 1. Build-Phase
-FROM node:18 AS build-stage # Benenne die Stage für Klarheit
+FROM node:18 AS build-stage
 WORKDIR /app
 
 # Installiere pnpm global im Image
