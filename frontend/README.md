@@ -12,6 +12,7 @@ npm install -g pnpm
 Assuming you have already cloned the repository and are in the `frontend/` directory, first download the project's dependencies:
 ```sh
 pnpm install
+pnpm add axios
 ```
 
 Then, to start a local web server simply run:
