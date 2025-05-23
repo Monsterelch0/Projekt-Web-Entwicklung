@@ -4,9 +4,8 @@ import { LoginCommand } from '../commands/LoginCommand';
 
 // Interface for the expected response from LoginCommand
 interface LoginResponse {
-  first_name: string;
-  // Add other fields from the backend(token or whatever)
-  // token?: string;
+  message?: string;
+  token?: string;
 }
 
 export default function Login() {
@@ -33,6 +32,7 @@ export default function Login() {
 
     try {
       const result: LoginResponse = await loginCommand.execute();
+      console.log(result.message);
       //console.log(`Welcome back, ${result.first_name}!`);
 
       // Sore Token here when implemented
