@@ -5,7 +5,8 @@ import type { GameStateDto } from '../../types'; // Pfad zu deiner globalen type
 // Die URL zu deinem Backend API
 // WICHTIG: Dieser Port (5296) muss mit dem Port übereinstimmen, auf dem dein Backend tatsächlich läuft!
 // Überprüfe die Startausgabe deines .NET Backends.
-const API_BASE_URL = 'http://localhost:5296/api/poker';
+const API_BASE_URL_FROM_ENV = import.meta.env.VITE_API_URL;
+const API_BASE_URL = API_BASE_URL_FROM_ENV ? `${API_BASE_URL_FROM_ENV}/api/poker` : 'http://localhost:5296/api/poker';
 
 class PokerGameService {
     private gameState: GameStateDto | null = null;
