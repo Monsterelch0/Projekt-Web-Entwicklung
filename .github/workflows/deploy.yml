@@ -20,7 +20,8 @@ jobs:
 
     - name: Build and Push Frontend Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/casino-frontend ./frontend
+        docker build --build-arg VITE_API_URL_ARG="http://joshiidkwhy.de:5296" \
+                     -t ${{ secrets.DOCKER_USERNAME }}/casino-frontend ./frontend
         docker push ${{ secrets.DOCKER_USERNAME }}/casino-frontend
 
     - name: Build and Push Backend Image
