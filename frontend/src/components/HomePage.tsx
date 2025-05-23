@@ -44,8 +44,7 @@ class GameFactory {
       { id: 'slots', name: 'Slot Machine', icon: '🎰' },
       { id: 'high-low', name: 'High-Low', icon: '🎯' },
       { id: 'blackjack', name: 'Blackjack', icon: '🃏' },
-      { id: 'roulette', name: 'Roulette', icon: '🎡' }, // NEU
-      { id: 'bonus-wheel', name: 'Bonus Wheel', icon: '🌟' }, // NEU
+      { id: 'roulette', name: 'Roulette', icon: '🎡' },
     ];
   }
 }
