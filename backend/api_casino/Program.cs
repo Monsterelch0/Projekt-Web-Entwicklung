@@ -11,6 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// builder.Services.AddSingleton<IDeck, Deck>(); // Nur wenn Deck NICHT statisch ist und injiziert werden soll
+builder.Services.AddScoped<ICardFactory, CardFactory>();
+builder.Services.AddScoped<IPokerGameService, PokerGameService>();
+
 
 // Database config
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -27,13 +31,16 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy
-            .WithOrigins("https://joshiidkwhy.de")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials(); // Nur nötig, wenn Cookies/Auth verwendet werden
+            .WithOrigins(
+                "https://joshiidkwhy.de",  // Deine Produktions-URL
+                "http://localhost:5173",   // Für Vite Dev Server (Frontend)
+                "http://127.0.0.1:5173"  // Für Vite Dev Server (Frontend, alternative Zugriffsweise)
+            )
+            .AllowAnyHeader()  // Erlaubt alle HTTP-Header
+            .AllowAnyMethod()  // Erlaubt alle HTTP-Methoden (GET, POST, PUT, etc.)
+            .AllowCredentials(); // Erlaubt das Senden von Credentials (z.B. Cookies, Authorization-Header). Vorsicht bei der Verwendung in Produktion mit nicht vertrauenswürdigen Origins.
     });
 });
-
 // Listen on all IPs/ports inside Docker
 builder.WebHost.UseUrls("http://0.0.0.0:5296");
 
