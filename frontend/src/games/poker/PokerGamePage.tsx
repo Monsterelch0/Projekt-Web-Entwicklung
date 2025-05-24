@@ -79,7 +79,7 @@ const PokerGamePage: React.FC = () => {
                         className="poker-button poker-button-large-font poker-button-primary" // Primärer Aktionsbutton
                         style={{marginRight: '10px'}}
                     >
-                        Offline Spiel starten
+                        CPU Spiel starten
                     </button>
                     <button
                         onClick={() => navigate('/home')} // Navigiert zur Home-Seite
