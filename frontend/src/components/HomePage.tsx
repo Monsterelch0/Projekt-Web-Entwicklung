@@ -1,6 +1,7 @@
 // src/components/HomePage.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCredits } from '../lib/useCredits';
 
 type GameModule = {
   id: string;
@@ -9,7 +10,7 @@ type GameModule = {
 };
 
 export default function HomePage() {
-  const [credits, setCredits] = useState(1000); // Beispielstartwert
+  const [credits, setCredits] = useCredits();
   const [games, setGames] = useState<GameModule[]>([]);
   const navigate = useNavigate();
 
