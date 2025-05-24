@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 67.733332 67.733333"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="casino.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.5518659"
+     inkscape:cx="107.93459"
+     inkscape:cy="116.95598"
+     inkscape:window-width="1920"
+     inkscape:window-height="1024"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:lockguides="false" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5512">
+      <stop
+         style="stop-color:#228000;stop-opacity:1;"
+         offset="0"
+         id="stop5508" />
+      <stop
+         style="stop-color:#195902;stop-opacity:1;"
+         offset="1"
+         id="stop5516" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5392">
+      <stop
+         style="stop-color:#dcd800;stop-opacity:1;"
+         offset="0"
+         id="stop5388" />
+      <stop
+         style="stop-color:#cc6e00;stop-opacity:1;"
+         offset="1"
+         id="stop5390" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5237">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop5233" />
+      <stop
+         style="stop-color:#310501;stop-opacity:1;"
+         offset="1"
+         id="stop5235" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5237"
+       id="linearGradient5239"
+       x1="25.159727"
+       y1="22.377329"
+       x2="29.960472"
+       y2="14.02874"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(6.0204985,0,0,6.0204985,-132.94142,-73.350633)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5392"
+       id="linearGradient5398"
+       x1="25.672096"
+       y1="21.41287"
+       x2="29.960472"
+       y2="14.02874"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(6.0204985,0,0,6.0204985,-132.94142,-73.350633)" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5512"
+       id="radialGradient5514"
+       cx="34.166664"
+       cy="34.166664"
+       fx="34.166664"
+       fy="34.166664"
+       r="33.866665"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.85400638,0,0,0.85400638,4.6881156,4.6881156)" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:url(#radialGradient5514);fill-opacity:1;stroke:none;stroke-width:2.56202;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5506"
+       cx="33.866665"
+       cy="33.866665"
+       r="28.922348" />
+    <g
+       aria-label="$"
+       id="text236"
+       style="font-size:67.9649px;font-family:'Fleur de Leah';-inkscape-font-specification:'Fleur de Leah';fill:url(#linearGradient5398);stroke:url(#linearGradient5239);stroke-width:3.61229;paint-order:stroke fill markers">
+      <path
+         d="m 53.976315,42.343724 c 0,-9.175261 -8.291717,-10.670489 -17.806803,-12.097752 V 14.614046 c 5.165332,0.679649 7.408174,2.310807 7.408174,5.369227 0,0.951508 -0.203895,0.951508 -0.203895,2.446736 0,2.310807 1.495228,3.806034 3.670104,3.806034 2.514702,0 4.213824,-1.699122 4.213824,-4.213823 0,-2.038947 -1.903017,-9.107296 -15.088207,-10.194735 V 3.5357678 H 33.654811 V 11.827485 C 23.596006,12.16731 16.935446,17.400607 16.935446,24.94471 c 0,6.592595 4.757543,9.99084 16.719365,11.689963 v 16.719364 c -6.048876,-0.407789 -9.243226,-2.038947 -9.243226,-4.757542 0,-1.699123 0.475754,-2.514702 0.475754,-4.213824 0,-2.446736 -1.699122,-4.213824 -4.077894,-4.213824 -2.854525,0 -4.825508,2.038947 -4.825508,5.029403 0,6.11684 5.912947,9.786945 17.670874,10.942348 v 8.631542 h 2.514701 V 56.140598 C 47.315755,55.121125 53.976315,49.887828 53.976315,42.343724 Z M 33.654811,29.634288 c -4.485683,-0.679649 -10.2627,-1.970982 -10.2627,-7.680033 0,-5.844981 6.93242,-7.340209 9.583051,-7.340209 h 0.679649 z M 47.51965,44.722495 c 0,4.961438 -4.553648,8.427648 -11.350138,8.631542 v -16.24361 c 5.980911,1.087438 11.350138,2.446736 11.350138,7.612068 z"
+         style="font-family:'TeX Gyre Bonum';-inkscape-font-specification:'TeX Gyre Bonum'"
+         id="path7043" />
+    </g>
+  </g>
+</svg>
