@@ -18,6 +18,9 @@ namespace CasinoApp.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+        public async Task<User?> GetByIdAsync(int id) {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+        }
         public void Add(User user)
         {
             _context.Users.Add(user);

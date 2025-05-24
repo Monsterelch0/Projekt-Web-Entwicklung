@@ -45,5 +45,10 @@ namespace CasinoApp.Services
             return (true, "Registrierung erfolgreich.");
         }
 
+        public async Task<User?> GetUserByIdAsync(int id) {
+            var user = await _unitOfWork.Users.GetByIdAsync(id);
+            return user;
+        }
+
     }
 }
