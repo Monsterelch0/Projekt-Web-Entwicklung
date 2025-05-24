@@ -16,6 +16,7 @@ import HorseRaceGame from './games/horse-racing/HorsePage';
 import NotFoundPage from './components/NotFoundPage';
 
 import './App.css';
+import SettingsPage from './components/SettingsPage';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/loginconcept" element={<LoginConcept />} />
         <Route path="/" element={<Login />} /> {/* Login page is the entry point */}
         <Route path="/home" element={<HomePage />} /> {/* Main page after login */}
+        <Route path="/settings" element={<SettingsPage />} />
 
         {/* Spiele-Seiten */}
         <Route path="/game/slots" element={<SlotMachinePage />} />

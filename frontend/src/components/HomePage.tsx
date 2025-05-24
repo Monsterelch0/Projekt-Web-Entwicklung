@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCredits } from '../lib/useCredits';
+import { SettingsIcon } from 'lucide-react';
 
 type GameModule = {
   id: string;
@@ -21,9 +22,12 @@ export default function HomePage() {
 
   return (
     <div>
-      <div style={{ textAlign: 'right', padding: '10px' }}>
-        💰 Credits: {credits}
-      </div>
+        <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', gap: '12px' }}>
+          💰 Credits: {credits}
+          <div className='settingsButton' onClick={() => navigate('/settings')}>
+            <SettingsIcon />
+          </div>
+        </div>
       <h1>Welcome</h1>
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
         {games.map((game) => (
