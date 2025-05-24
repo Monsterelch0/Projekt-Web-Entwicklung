@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IDeck, Deck>(); // Registriert Deck als Singleton f�r IDeck
+builder.Services.AddSingleton<IDeck, Deck>(); // Registriert Deck als Singleton für IDeck
 builder.Services.AddSingleton<ICardFactory, CardFactory>(); // CardFactory kann auch Singleton oder Scoped/Transient sein
 
 
@@ -38,12 +38,12 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "https://joshiidkwhy.de",  // Deine Produktions-URL
-                "http://localhost:5173",   // F�r Vite Dev Server (Frontend)
-                "http://127.0.0.1:5173"  // F�r Vite Dev Server (Frontend, alternative Zugriffsweise)
+                "http://localhost:5173",   // Für Vite Dev Server (Frontend)
+                "http://127.0.0.1:5173"  // Für Vite Dev Server (Frontend, alternative Zugriffsweise)
             )
             .AllowAnyHeader()  // Erlaubt alle HTTP-Header
             .AllowAnyMethod()  // Erlaubt alle HTTP-Methoden (GET, POST, PUT, etc.)
-            .AllowCredentials(); // Erlaubt das Senden von Credentials (z.B. Cookies, Authorization-Header). Vorsicht bei der Verwendung in Produktion mit nicht vertrauensw�rdigen Origins.
+            .AllowCredentials(); // Erlaubt das Senden von Credentials (z.B. Cookies, Authorization-Header). Vorsicht bei der Verwendung in Produktion mit nicht vertrauenswürdigen Origins.
     });
 });
 // Listen on all IPs/ports inside Docker

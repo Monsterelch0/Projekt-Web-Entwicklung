@@ -1,6 +1,6 @@
 // CasinoApp/Services/Deck.cs
-using CasinoApp.Interfaces; // Für IDeck und ICardFactory
-using CasinoApp.Models;    // Für Card, Suit, Rank
+using CasinoApp.Interfaces; // FÃ¼r IDeck und ICardFactory
+using CasinoApp.Models;    // FÃ¼r Card, Suit, Rank
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +9,22 @@ namespace CasinoApp.Services
 {
     public class Deck : IDeck // Implementiert IDeck
     {
-        private List<Card> _cards; // Umbenannt von 'cards' zu '_cards' (übliche Konvention für private Felder)
+        private List<Card> _cards; // Umbenannt von 'cards' zu '_cards' (Ã¼bliche Konvention fÃ¼r private Felder)
         private readonly ICardFactory _cardFactory; // Sollte per DI kommen
         private readonly Random _random = new Random();
 
-        // Konstruktor, der ICardFactory per Dependency Injection erhält
-        public Deck(ICardFactory cardFactory)
+        // Konstruktor, der ICardFactory per Dependency Injection erhÃ¤lt
+        //public Deck(ICardFactory cardFactory)
+        public Deck()
         {
-            _cardFactory = cardFactory ?? throw new ArgumentNullException(nameof(cardFactory));
+            //_cardFactory = cardFactory ?? throw new ArgumentNullException(nameof(cardFactory));
             _cards = new List<Card>(); // Initialisiere _cards hier oder in InitializeDeck
             InitializeDeck();
         }
 
         private void InitializeDeck()
         {
-            _cards = _cardFactory.CreateStandardDeck(); // Erstellt ein volles Deck über die Factory
+            _cards = _cardFactory.CreateStandardDeck(); // Erstellt ein volles Deck Ã¼ber die Factory
             Shuffle(); // Direkt mischen
         }
 
@@ -43,7 +44,7 @@ namespace CasinoApp.Services
         {
             if (_cards.Count == 0)
             {
-                // Optional: Deck neu initialisieren und mischen oder Fehler/null zurückgeben
+                // Optional: Deck neu initialisieren und mischen oder Fehler/null zurÃ¼ckgeben
                 // InitializeDeck(); 
                 return null;
             }
@@ -55,8 +56,8 @@ namespace CasinoApp.Services
 
         public int CardsRemaining => _cards.Count;
 
-        // Diese Methode ist wichtig, um das Deck für eine neue Runde/Spiel zurückzusetzen,
-        // da die Instanz jetzt ein Singleton ist und ihren Zustand beibehält.
+        // Diese Methode ist wichtig, um das Deck fÃ¼r eine neue Runde/Spiel zurÃ¼ckzusetzen,
+        // da die Instanz jetzt ein Singleton ist und ihren Zustand beibehÃ¤lt.
         public void ResetDeck()
         {
             InitializeDeck();
