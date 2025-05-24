@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useCredits } from "../lib/useCredits";
 import { useNavigate } from "react-router-dom";
 import placeholderAvatar from "../assets/placeholder-avatar.jpg";
+import { HomeIcon } from "lucide-react";
 
 export default function SettingsPage() {
     const [credits, setCredits] = useCredits();
@@ -11,6 +12,13 @@ export default function SettingsPage() {
 
     return (
         <div>
+            <div
+                className="settingsButton" style={{ margin: 'auto', marginRight: '0' }}
+                onClick={() => navigate('/home')}
+            >
+                <HomeIcon />
+            </div>
+
             <h1>Settings</h1>
             <br />
 
