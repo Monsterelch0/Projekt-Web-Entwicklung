@@ -50,5 +50,13 @@ namespace CasinoApp.Services
             return user;
         }
 
+        public async Task SetBalance(int id, decimal balance) {
+            User user = await _unitOfWork.Users.GetByIdAsync(id)
+                ?? throw new Exception("User does not exist");
+
+            user.Balance = balance;
+            await _unitOfWork.Users.UpdateUser(user);
+        }
+
     }
 }

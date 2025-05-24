@@ -11,6 +11,8 @@ export function useAccount(): AccountDto | null {
     // This fetches the account from the API every time useAccount() is used,
     // which isn't great performance wise but we don't currently have any
     // form of global state so this is the best we can do for now.
+    // useCredits() uses this too, so on a lot of pages we create a cascade of
+    // basically identical web requests.
     // Might be worth fixing in the future.
     useEffect(() => {
         getAccount()

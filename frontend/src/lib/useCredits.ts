@@ -1,11 +1,13 @@
-import localforage from "localforage";
 import { useCallback, useEffect, useState } from "react";
+import { USERS_SET_CREDITS_API_ENDPOINT } from "../config";
+import { useAccount } from "./useAccount";
 
-const DEFAULT_CREDITS = 1000;
+// The default value if we can't fetch credits from an account (e.g. if not logged in)
+const DEFAULT_CREDITS = 0;
 
 type ReturnVal = [
     number | null,
-    (credits: number) => void,
+    (credits: number) => Promise<void>,
 ];
 
 /**
@@ -13,33 +15,35 @@ type ReturnVal = [
  */
 export function useCredits(): ReturnVal {
     const [credits, setCredits] = useState<number | null>(null);
+    const account = useAccount();
 
-    // localforage stores data in localstorage or indexeddb, depending on
-    // which is available.
-    // This would eventually be replaced with an API call.
     // Since fetching the current credit value is asynchronous, we use an
     // effect to update `credits` once it's available - Meaning `credits`
-    // will briefly be null.
+    // will briefly be null until useAccount() provides us the data we need.
     useEffect(() => {
-        localforage.getItem<number>('credits')
-            .then(async (value) => {
-                if (value != null) {
-                    console.debug("Retrieved credits:", value);
-                    setCredits(value);
-                } else {
-                    // Set to default if it's not set already
-                    await localforage.setItem<number>('credits', DEFAULT_CREDITS);
-                    setCredits(DEFAULT_CREDITS);
-                    console.debug("Set credits to default value");
-                }
-            })
-            .catch(console.error);
-    }, []);
+        if (account?.balance != null) {
+            console.debug("Retrieved credits:", account.balance);
+            setCredits(account.balance);
+        } else {
+            // Set to default if it's not set already
+            setCredits(DEFAULT_CREDITS);
+            console.debug("Set credits to default value");
+        }
+    }, [account]);
 
-    const setCreditsCb = useCallback((newCredits: number) => {
+    const setCreditsCb = useCallback(async (newCredits: number) => {
+        if (account) {
+            const request = await fetch(USERS_SET_CREDITS_API_ENDPOINT + '?' + new URLSearchParams({ id: account.id.toString() }), {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newCredits),
+            });
+            if (!request.ok) throw new Error("Failed to update credits");
+            console.info("Updated server-side credits");
+        }
+
         setCredits(newCredits);
-        localforage.setItem<number>('credits', newCredits);
-    }, []);
+    }, [account]);
 
     return [credits, setCreditsCb];
 }

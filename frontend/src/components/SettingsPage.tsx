@@ -105,10 +105,10 @@ export default function SettingsPage() {
                     <button
                         className="settingsPageButton"
                         disabled={!topUpValid}
-                        onClick={() => {
+                        onClick={async () => {
                             if (credits == null) return;
-                            setCredits(credits! + Number(topUpValue));
                             setTopUpValue('');
+                            await setCredits(credits! + Number(topUpValue));
                             alert('Purchase succeeded - Credits bought!');
                         }}
                     >
@@ -117,14 +117,14 @@ export default function SettingsPage() {
                     <button
                         className="settingsPageButton"
                         disabled={!topUpValid}
-                        onClick={() => {
+                        onClick={async () => {
                             if (credits == null) return;
                             if (credits - Number(topUpValue) < 0) {
                                 alert("You can't withdraw more than you own!");
                                 return;
                             }
-                            setCredits(credits! - Number(topUpValue));
                             setTopUpValue('');
+                            await setCredits(credits! - Number(topUpValue));
                             alert("Withdrawal completed!");
                         }}
                     >

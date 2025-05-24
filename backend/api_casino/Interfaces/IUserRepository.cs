@@ -6,6 +6,7 @@ namespace CasinoApp.Interfaces
     {
         Task<User?> GetByEmailAsync(string email);
         Task<User?> GetByIdAsync(int id);
+        Task UpdateUser(User user);
         void Add(User user);
     }
 }

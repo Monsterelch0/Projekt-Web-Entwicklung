@@ -11,7 +11,7 @@ type GameModule = {
 };
 
 export default function HomePage() {
-  const [credits, setCredits] = useCredits();
+  const [credits] = useCredits();
   const [games, setGames] = useState<GameModule[]>([]);
   const navigate = useNavigate();
 

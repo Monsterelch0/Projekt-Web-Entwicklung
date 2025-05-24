@@ -48,16 +48,20 @@ namespace CasinoApp.Controllers
          * is not implemented yet we require passing the user ID to fetch as query parameter for now.
          */
         [HttpGet("me")]
-        public async Task<ActionResult<PublicUser>> GetSelf([FromQuery] String id) {
-            try {
-                var user = await _userService.GetUserByIdAsync(Convert.ToInt32(id));
-                if (user == null) return NotFound(new { message = "User not found" });
-                return Ok(new PublicUser(user));
-            } catch(FormatException) {
-                return BadRequest(new { message = "Non-numeric ID provided" });
-            } catch(OverflowException) {
-                return BadRequest(new { message = "Invalid ID" });
-            }
+        public async Task<ActionResult<PublicUser>> GetSelf([FromQuery] int id) {
+            var user = await _userService.GetUserByIdAsync(id);
+            if (user == null) return NotFound(new { message = "User not found" });
+            return Ok(new PublicUser(user));
+        }
+
+        /**
+         * Allows updating a user's credits. Temporary - In the final product the user should never
+         * have direct control over their credit balance.
+         */
+        [HttpPatch("credits")]
+        public async Task<IActionResult> SetCredits([FromQuery] int id, [FromBody] int credits) {
+            await _userService.SetBalance(id, credits);
+            return Ok();
         }
     }
 }
