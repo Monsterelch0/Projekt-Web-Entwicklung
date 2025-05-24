@@ -5,6 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+// This file currently causes build failures. I've commented out the lines that
+// cause the issue (22 and 25), but that means this class is currently broken.
+// Someone who knows more about C# should take care of this:
+// Cannot consume scoped service 'CasinoApp.Interfaces.ICardFactory' from singleton 'CasinoApp.Interfaces.IDeck'.
+
 namespace CasinoApp.Services
 {
     public class Deck : IDeck // Implementiert IDeck
