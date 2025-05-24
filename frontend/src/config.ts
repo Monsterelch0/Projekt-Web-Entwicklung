@@ -14,6 +14,7 @@ const VITE_API_URL_VALUE = import.meta.env.VITE_API_URL;
 // Spezifische API-Pfade, die an die API_DOMAIN_BASE angehängt werden.
 // Diese Pfade sind so, wie Nginx sie von außen erwartet.
 export const LOGIN_API_ENDPOINT = `${API_DOMAIN_BASE}/api/users/login`;
+export const USERS_ME_API_ENDPOINT = `${API_DOMAIN_BASE}/api/users/me`;
 export const POKER_API_ENDPOINT_BASE = `${API_DOMAIN_BASE}/api/poker`;
 
 // Für Debugging

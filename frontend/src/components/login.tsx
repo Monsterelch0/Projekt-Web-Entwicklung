@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginCommand } from '../commands/LoginCommand'; 
+import { setAccount } from '../lib/account';
 
 // Interface for the expected response from LoginCommand
 interface LoginResponse {
   message?: string;
-  token?: string;
+  userId: number;
 }
 
 export default function Login() {
@@ -35,10 +36,7 @@ export default function Login() {
       console.log(result.message);
       //console.log(`Welcome back, ${result.first_name}!`);
 
-      // Sore Token here when implemented
-      // if (result.token) {
-      //   localStorage.setItem('authToken', result.token);
-      // }
+      setAccount(result.userId);
 
       // Redirect to the main page after successful login
       navigate('/home');

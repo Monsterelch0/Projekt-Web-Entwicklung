@@ -25,3 +25,13 @@ export interface GameStateDto {
     winnerIds?: string[];           // Liste der IDs der Gewinner (für Split Pots)
     winningHandDescription?: string; // Beschreibung der Gewinnerhand
 }
+
+export interface AccountDto {
+    id: number,
+    email: string,
+    firstName: string,
+    lastName: string,
+    balance: number,
+    createdAt: Date,
+    isActive: boolean,
+}
