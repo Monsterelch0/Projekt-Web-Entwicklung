@@ -1,4 +1,5 @@
 // CasinoApp/Services/HandEvaluatorService.cs
+using CasinoApp.Interfaces; // WICHTIG: Um das Interface aus dem korrekten Namespace zu verwenden
 using CasinoApp.Models;
 using CasinoApp.Models.PokerLogic;
 using System;
@@ -7,15 +8,13 @@ using System.Linq;
 
 namespace CasinoApp.Services
 {
-    public interface IHandEvaluatorService
-    {
-        EvaluatedHand EvaluateHand(List<Card> fiveCardHand);
-    }
+    // Die Interface-Definition wurde hier entfernt.
 
-    public class HandEvaluatorService : IHandEvaluatorService
+    public class HandEvaluatorService : IHandEvaluatorService // Implementiert das Interface aus CasinoApp.Interfaces
     {
         public EvaluatedHand EvaluateHand(List<Card> fiveCardHand)
         {
+            // ... (die gesamte Logik zur Handbewertung bleibt hier) ...
             if (fiveCardHand == null || fiveCardHand.Count != 5)
             {
                 throw new ArgumentException("Eine Pokerhand muss aus genau 5 Karten bestehen.");
@@ -29,56 +28,48 @@ namespace CasinoApp.Services
             // 1. Royal Flush / Straight Flush
             if (isStraight && isFlush)
             {
-                List<Card> straightFlushCards = DetermineStraightCards(sortedHand); // Stellt A-5 Korrektheit sicher
-                if (straightFlushCards[0].Rank == Rank.Ace && straightFlushCards[4].Rank == Rank.Ten) // Höchste Karte Ass in einem Straight
+                List<Card> straightFlushCards = DetermineStraightCards(sortedHand);
+                if (straightFlushCards[0].Rank == Rank.Ace && straightFlushCards[4].Rank == Rank.Ten)
                 {
-                    // Royal Flush hat keine Kicker im traditionellen Sinn, da er unschlagbar ist in seiner Kategorie
                     return new EvaluatedHand(HandRank.RoyalFlush, straightFlushCards, new List<Rank>());
                 }
-                // Für Straight Flush: Die Ränge der Karten in der Straße, höchste zuerst.
-                // Bei A-5 ist die 5 die "höchste" Karte für den Straight-Vergleich.
                 return new EvaluatedHand(HandRank.StraightFlush, straightFlushCards, straightFlushCards.Select(c => c.Rank).ToList());
             }
-
             // 2. Four of a Kind (Vierling)
             var fourOfAKindResult = CheckFourOfAKind(sortedHand, rankCounts);
             if (fourOfAKindResult != null) return fourOfAKindResult;
-
             // 3. Full House
             var fullHouseResult = CheckFullHouse(sortedHand, rankCounts);
             if (fullHouseResult != null) return fullHouseResult;
-
             // 4. Flush (Farbe)
             if (isFlush)
             {
-                // Alle 5 Kartenwerte in absteigender Reihenfolge sind die "Kicker".
                 return new EvaluatedHand(HandRank.Flush, new List<Card>(sortedHand), sortedHand.Select(c => c.Rank).ToList());
             }
-
             // 5. Straight (Straße)
             if (isStraight)
             {
                 List<Card> straightCards = DetermineStraightCards(sortedHand);
-                // Alle 5 Kartenwerte in absteigender Reihenfolge sind die "Kicker".
                 return new EvaluatedHand(HandRank.Straight, straightCards, straightCards.Select(c => c.Rank).ToList());
             }
-
             // 6. Three of a Kind (Drilling)
             var threeOfAKindResult = CheckThreeOfAKind(sortedHand, rankCounts);
             if (threeOfAKindResult != null) return threeOfAKindResult;
-
             // 7. Two Pair (Zwei Paare)
             var twoPairResult = CheckTwoPair(sortedHand, rankCounts);
             if (twoPairResult != null) return twoPairResult;
-
             // 8. One Pair (Ein Paar)
             var onePairResult = CheckOnePair(sortedHand, rankCounts);
             if (onePairResult != null) return onePairResult;
-
             // 9. High Card (Höchste Karte)
             return new EvaluatedHand(HandRank.HighCard, new List<Card>(sortedHand), sortedHand.Select(c => c.Rank).ToList());
         }
 
+        // HIER FOLGEN ALLE DEINE privaten Hilfsmethoden:
+        // GetRankCounts, IsFlush, IsStraight, DetermineStraightCards,
+        // CheckFourOfAKind, CheckFullHouse, CheckThreeOfAKind,
+        // CheckTwoPair, CheckOnePair
+        // (Diese bleiben unverändert, wie du sie gepostet hast)
         private Dictionary<Rank, int> GetRankCounts(List<Card> hand)
         {
             return hand.GroupBy(card => card.Rank)
@@ -92,7 +83,7 @@ namespace CasinoApp.Services
             return hand.All(card => card.Suit == firstSuit);
         }
 
-        private bool IsStraight(List<Card> sortedHand) // Erwartet nach Rang absteigend sortierte Hand
+        private bool IsStraight(List<Card> sortedHand)
         {
             if (sortedHand == null || sortedHand.Count != 5) return false;
             bool normalStraight = true;
@@ -114,9 +105,9 @@ namespace CasinoApp.Services
 
         private List<Card> DetermineStraightCards(List<Card> sortedHand)
         {
-            if (sortedHand[0].Rank == Rank.Ace && sortedHand[1].Rank == Rank.Five) // A-5 Straight
+            if (sortedHand[0].Rank == Rank.Ace && sortedHand[1].Rank == Rank.Five)
             {
-                var wheelHand = new List<Card> { sortedHand[1], sortedHand[2], sortedHand[3], sortedHand[4], sortedHand[0] }; // 5,4,3,2,A
+                var wheelHand = new List<Card> { sortedHand[1], sortedHand[2], sortedHand[3], sortedHand[4], sortedHand[0] };
                 return wheelHand;
             }
             return new List<Card>(sortedHand);
@@ -128,11 +119,9 @@ namespace CasinoApp.Services
             if (fourKindRankEntry.Key != default(Rank))
             {
                 Rank fourRank = fourKindRankEntry.Key;
-                var bestCards = sortedHand.Where(c => c.Rank == fourRank).ToList(); // Die 4 Karten des Vierlings
-                var kickerCard = sortedHand.First(c => c.Rank != fourRank);     // Die 1 Kicker-Karte
+                var bestCards = sortedHand.Where(c => c.Rank == fourRank).ToList();
+                var kickerCard = sortedHand.First(c => c.Rank != fourRank);
                 bestCards.Add(kickerCard);
-
-                // Für den Vergleich: [RangDesVierlings, RangDesKickers]
                 return new EvaluatedHand(HandRank.FourOfAKind, bestCards.OrderByDescending(c => c.Rank).ToList(),
                                          new List<Rank> { fourRank, kickerCard.Rank });
             }
@@ -148,7 +137,6 @@ namespace CasinoApp.Services
             {
                 Rank threeRank = threeKindRankEntry.Key;
                 Rank pairRank = pairRankEntry.Key;
-                // BestFiveCards ist die gesamte Hand. KickersInOrder definiert die Stärke: [Drilling-Rang, Paar-Rang].
                 return new EvaluatedHand(HandRank.FullHouse, new List<Card>(sortedHand),
                                          new List<Rank> { threeRank, pairRank });
             }
@@ -158,7 +146,7 @@ namespace CasinoApp.Services
         private EvaluatedHand? CheckThreeOfAKind(List<Card> sortedHand, Dictionary<Rank, int> rankCounts)
         {
             var threeKindRankEntry = rankCounts.FirstOrDefault(kvp => kvp.Value == 3);
-            if (threeKindRankEntry.Key != default(Rank) && !rankCounts.Any(kvp => kvp.Value == 2)) // Kein Paar (sonst wäre es Full House)
+            if (threeKindRankEntry.Key != default(Rank) && !rankCounts.Any(kvp => kvp.Value == 2))
             {
                 Rank threeRank = threeKindRankEntry.Key;
                 var drillingCards = sortedHand.Where(c => c.Rank == threeRank).ToList();
@@ -167,8 +155,6 @@ namespace CasinoApp.Services
                                            .Take(2)
                                            .ToList();
                 var bestCards = drillingCards.Concat(kickerCards).OrderByDescending(c => c.Rank).ToList();
-
-                // Für den Vergleich: [RangDesDrillings, HöchsterKicker, ZweithöchsterKicker]
                 return new EvaluatedHand(HandRank.ThreeOfAKind, bestCards,
                                          new List<Rank> { threeRank }.Concat(kickerCards.Select(k => k.Rank)).ToList());
             }
@@ -181,17 +167,13 @@ namespace CasinoApp.Services
                                      .Select(kvp => kvp.Key)
                                      .OrderByDescending(r => r)
                                      .ToList();
-
             if (pairsRanks.Count >= 2)
             {
                 Rank highPairRank = pairsRanks[0];
                 Rank lowPairRank = pairsRanks[1];
-
                 var pairCards = sortedHand.Where(c => c.Rank == highPairRank || c.Rank == lowPairRank).ToList();
                 var kickerCard = sortedHand.First(c => c.Rank != highPairRank && c.Rank != lowPairRank);
                 var bestCards = pairCards.Concat(new List<Card> { kickerCard }).OrderByDescending(c => c.Rank).ToList();
-
-                // Für den Vergleich: [HöheresPaar-Rang, NiedrigeresPaar-Rang, Kicker-Rang]
                 return new EvaluatedHand(HandRank.TwoPair, bestCards,
                                          new List<Rank> { highPairRank, lowPairRank, kickerCard.Rank });
             }
@@ -202,8 +184,7 @@ namespace CasinoApp.Services
         {
             var pairRankEntry = rankCounts.FirstOrDefault(kvp => kvp.Value == 2);
             bool isOnlyOnePair = rankCounts.Count(kvp => kvp.Value == 2) == 1;
-            bool noBetterCombination = !rankCounts.Any(kvp => kvp.Value >= 3); // Kein Drilling oder Vierling
-
+            bool noBetterCombination = !rankCounts.Any(kvp => kvp.Value >= 3);
             if (pairRankEntry.Key != default(Rank) && isOnlyOnePair && noBetterCombination)
             {
                 Rank pairRank = pairRankEntry.Key;
@@ -213,8 +194,6 @@ namespace CasinoApp.Services
                                            .Take(3)
                                            .ToList();
                 var bestCards = pairCards.Concat(kickerCards).OrderByDescending(c => c.Rank).ToList();
-
-                // Für den Vergleich: [Paar-Rang, HöchsterKicker, ZweithöchsterKicker, DritthöchsterKicker]
                 return new EvaluatedHand(HandRank.OnePair, bestCards,
                                          new List<Rank> { pairRank }.Concat(kickerCards.Select(k => k.Rank)).ToList());
             }

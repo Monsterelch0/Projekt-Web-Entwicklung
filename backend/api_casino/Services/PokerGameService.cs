@@ -114,28 +114,27 @@ namespace CasinoApp.Services
 
         private void DetermineAndSetWinner(IHandEvaluatorService handEvaluator)
         {
-            // Stelle sicher, dass die Community Cards vollständig sind für einen sinnvollen Showdown
-            if (CommunityCards.Count < 5 && Players.Count > 1)
-            {
-                // Dies sollte nicht passieren, wenn AdvancePhaseAndEvaluate korrekt aufgerufen wird
-                WinningHandDescription = "Showdown nicht möglich, Community Cards unvollständig.";
-                return;
-            }
+            Console.WriteLine(""); // Leerzeile für bessere Lesbarkeit im Log
+            Console.WriteLine("[DEBUG] === DetermineAndSetWinner WIRD AUFGERUFEN ===");
+            Console.WriteLine($"[DEBUG] Community Cards auf dem Tisch: {string.Join(", ", CommunityCards.Select(c => c.ToString()))}");
 
-            // Berücksichtige nur Spieler, die noch aktiv im Spiel sind (nicht gefoldet haben)
-            // ANNAHME: Deine Player-Klasse hat eine 'IsActive'-Eigenschaft.
             var activePlayers = Players.Where(p => p.IsActive).ToList();
 
             if (!activePlayers.Any())
             {
                 WinningHandDescription = "Keine aktiven Spieler für den Showdown.";
+                WinnerIds.Clear();
+                Console.WriteLine("[DEBUG] Keine aktiven Spieler für den Showdown gefunden.");
                 return;
             }
+            Console.WriteLine($"[DEBUG] Aktive Spieler für Showdown: {string.Join(", ", activePlayers.Select(p => p.Id))}");
 
             if (activePlayers.Count == 1)
             {
+                WinnerIds.Clear();
                 WinnerIds.Add(activePlayers[0].Id);
-                WinningHandDescription = $"{activePlayers[0].Id} gewinnt, da alle anderen Spieler nicht aktiv sind.";
+                WinningHandDescription = $"{activePlayers[0].Id} gewinnt (einziger aktiver Spieler).";
+                Console.WriteLine($"[DEBUG] Nur ein aktiver Spieler: {WinningHandDescription}");
                 return;
             }
 
@@ -143,22 +142,29 @@ namespace CasinoApp.Services
 
             foreach (var player in activePlayers)
             {
-                if (player.Hand.Count < 2 && CommunityCards.Count < 3) // Grundlegende Prüfung
-                {
-                    continue;
-                }
+                Console.WriteLine($"[DEBUG] ---- Bewerte Spieler: {player.Id} ----");
+                Console.WriteLine($"[DEBUG]   {player.Id} Handkarten: {string.Join(", ", player.Hand.Select(c => c.ToString()))}");
 
                 List<Card> allSevenCards = new List<Card>(player.Hand);
                 allSevenCards.AddRange(CommunityCards);
 
-                if (allSevenCards.Count < 5) continue; // Kann keine 5-Karten-Hand bilden
+                if (allSevenCards.Count < 5)
+                {
+                    Console.WriteLine($"[DEBUG]   {player.Id} hat nicht genug Karten ({allSevenCards.Count}) für eine 5-Karten-Hand.");
+                    continue;
+                }
 
                 EvaluatedHand? bestPlayerHand = null;
-                foreach (var fiveCardCombination in PokerHandUtility.GetFiveCardCombinationsFromSeven(allSevenCards))
+                var combinations = PokerHandUtility.GetFiveCardCombinationsFromSeven(allSevenCards).ToList();
+                // Console.WriteLine($"[DEBUG]   {player.Id} hat {combinations.Count} mögliche 5-Karten-Kombinationen."); // Kann sehr viel Output erzeugen
+
+                foreach (var fiveCardCombination in combinations)
                 {
-                    if (fiveCardCombination.Count == 5) // Stelle sicher, dass es eine 5-Karten-Kombi ist
+                    if (fiveCardCombination.Count == 5)
                     {
                         EvaluatedHand currentEval = handEvaluator.EvaluateHand(fiveCardCombination);
+                        // Optional: Sehr detailliertes Logging jeder einzelnen 5-Karten-Kombination und ihrer Bewertung
+                        // Console.WriteLine($"[DEBUG]     Kombi: {string.Join(", ", fiveCardCombination.Select(c=>c.ToString()))} -> Eval: {currentEval.Rank} / {currentEval.ToString()}");
                         if (bestPlayerHand == null || currentEval.CompareTo(bestPlayerHand) > 0)
                         {
                             bestPlayerHand = currentEval;
@@ -168,19 +174,34 @@ namespace CasinoApp.Services
 
                 if (bestPlayerHand != null)
                 {
+                    Console.WriteLine($"[DEBUG]   ===> {player.Id} BESTE HAND: {bestPlayerHand.ToString()}");
                     playerEvaluatedHands.Add((player, bestPlayerHand));
+                }
+                else
+                {
+                    Console.WriteLine($"[DEBUG]   ===> {player.Id} konnte keine beste Hand ermitteln.");
                 }
             }
 
             if (!playerEvaluatedHands.Any())
             {
                 WinningHandDescription = "Konnte keine Hände der aktiven Spieler bewerten.";
-                WinnerIds.Clear(); // Stelle sicher, dass keine alten Gewinner drin sind
+                WinnerIds.Clear();
+                Console.WriteLine("[DEBUG] Keine Hände für den finalen Vergleich bewertet.");
                 return;
             }
 
+            // Sortiere die bewerteten Hände der Spieler, die beste Hand zuerst
+            playerEvaluatedHands.Sort((eval1, eval2) => eval2.HandDetails.CompareTo(eval1.HandDetails)); // Beste Hand an Index 0
+
+            Console.WriteLine("[DEBUG] ---- Sortierte Hände für finalen Vergleich (Beste zuerst): ----");
+            foreach (var peh in playerEvaluatedHands)
+            {
+                Console.WriteLine($"[DEBUG]   Spieler: {peh.Player.Id}, Hand: {peh.HandDetails.ToString()}");
+            }
+
             EvaluatedHand winningEvaluatedHand = playerEvaluatedHands[0].HandDetails;
-            WinnerIds.Clear(); // Zuerst alte Gewinner löschen
+            WinnerIds.Clear();
             WinnerIds.Add(playerEvaluatedHands[0].Player.Id);
 
             // Überprüfe auf Split Pot
@@ -196,17 +217,22 @@ namespace CasinoApp.Services
                 }
             }
 
-            // === ANPASSUNG DER WINNINGHANDDESCRIPTION ===
             string handRankName = ConvertHandRankToReadableString(winningEvaluatedHand.Rank);
 
             if (WinnerIds.Count > 1)
             {
-                WinningHandDescription = $"Split Pot! Gewinner: {string.Join(" und ", WinnerIds)} mit: {handRankName}";
+                WinningHandDescription = $"Split Pot! Winners: {string.Join(" and ", WinnerIds)} with: {handRankName}";
             }
             else
             {
-                WinningHandDescription = $"{WinnerIds[0]} Winns with: {handRankName}";
+                WinningHandDescription = $"{WinnerIds[0]} wins with: {handRankName}";
             }
+            Console.WriteLine($"[DEBUG] === Finale Gewinner-Ermittlung abgeschlossen ===");
+            Console.WriteLine($"[DEBUG] WinningHandDescription: {WinningHandDescription}");
+            Console.WriteLine($"[DEBUG] WinnerIds: {string.Join(", ", WinnerIds)}");
+            Console.WriteLine($"[DEBUG] Die tatsächlich stärkste Hand (laut Sortierung): {winningEvaluatedHand.ToString()}");
+            Console.WriteLine("[DEBUG] ===========================================");
+            Console.WriteLine(""); // Leerzeile danach
         }
         // Innerhalb der 'internal class PokerGame' oder als private statische Methode in 'PokerGameService'
         private string ConvertHandRankToReadableString(HandRank rank)
