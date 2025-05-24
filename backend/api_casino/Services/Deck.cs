@@ -18,11 +18,10 @@ namespace CasinoApp.Services
         private readonly ICardFactory _cardFactory; // Sollte per DI kommen
         private readonly Random _random = new Random();
 
-        // Konstruktor, der ICardFactory per Dependency Injection erhält
-        //public Deck(ICardFactory cardFactory)
-        public Deck()
+        //Konstruktor, der ICardFactory per Dependency Injection erhält
+        public Deck(ICardFactory cardFactory)
         {
-            //_cardFactory = cardFactory ?? throw new ArgumentNullException(nameof(cardFactory));
+            _cardFactory = cardFactory ?? throw new ArgumentNullException(nameof(cardFactory));
             _cards = new List<Card>(); // Initialisiere _cards hier oder in InitializeDeck
             InitializeDeck();
         }
