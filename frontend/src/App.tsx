@@ -10,6 +10,7 @@ import HighLowPage from './games/high-low/HighLowPage';
 import BlackjackPage from './games/blackjack/BlackjackPage';
 import RoulettePage from './games/roulette/RoulettePage';
 import PokerGamePage from './games/poker/PokerGamePage';
+import Crapspage from './games/craps/Crapspage';
 // NotFound Page
 import NotFoundPage from './components/NotFoundPage';
 
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/game/blackjack" element={<BlackjackPage />} />
         <Route path="/game/roulette" element={<RoulettePage />} />
         <Route path="/game/poker" element={<PokerGamePage />} />
+        <Route path="/game/craps" element={<Crapspage />} />
 
         {/* Optionale Catch-All Route für nicht definierte Pfade */}
         <Route path="*" element={<NotFoundPage />} />

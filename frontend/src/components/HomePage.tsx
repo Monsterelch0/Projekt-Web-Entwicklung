@@ -45,7 +45,8 @@ class GameFactory {
       { id: 'high-low', name: 'High-Low', icon: '🎯' },
       { id: 'blackjack', name: 'Blackjack', icon: '🃏' },
       { id: 'roulette', name: 'Roulette', icon: '🎡' },
-      { id: 'poker', name: 'Poker', icon: '♠️' },
+      { id: 'poker', name: 'Poker', icon: '♠️' },      
+      { id: 'craps', name: 'Craps', icon: '🎲' }
     ];
   }
 }
