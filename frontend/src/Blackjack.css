@@ -1,0 +1,87 @@
+.blackjack-container {
+  width: 300px;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.hand {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.card {
+  width: 50px;
+  height: 70px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background-color: white;
+  color: black;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card.red {
+  color: red;
+}
+
+.card.back {
+  background-color: #666;
+  color: white;
+}
+
+.score {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.message {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  background-color: #1e88e5;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover:not(:disabled) {
+  background-color: #1565c0;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
