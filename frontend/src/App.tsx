@@ -12,6 +12,7 @@ import RoulettePage from './games/roulette/RoulettePage';
 import PokerGamePage from './games/poker/PokerGamePage';
 import Crapspage from './games/craps/Crapspage';
 import HorseRaceGame from './games/horse-racing/HorsePage';
+import BlackRedPage from './games/black-red/BlackRedPage';
 // NotFound Page
 import NotFoundPage from './components/NotFoundPage';
 
@@ -35,7 +36,10 @@ export default function App() {
         <Route path="/game/roulette" element={<RoulettePage />} />
         <Route path="/game/poker" element={<PokerGamePage />} />
         <Route path="/game/craps" element={<Crapspage />} />
-        <Route path="/game/horse" element={<HorseRaceGame />} />        
+        <Route path="/game/horse" element={<HorseRaceGame />} />
+        <Route path="/game/black-red" element={<BlackRedPage />} />
+
+        
 
         {/* Optionale Catch-All Route für nicht definierte Pfade */}
         <Route path="*" element={<NotFoundPage />} />

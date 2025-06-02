@@ -52,7 +52,8 @@ class GameFactory {
       { id: 'roulette', name: 'Roulette', icon: '🎡' },
       { id: 'poker', name: 'Poker', icon: '♠️' },      
       { id: 'craps', name: 'Craps', icon: '🎲' },
-      { id: 'horse', name: 'Horse Racing', icon: '🐎' }
+      { id: 'horse', name: 'Horse Racing', icon: '🐎' },
+      { id: 'black-red', name: 'Black-Red', icon: '🟥⬛' }
     ];
   }
 }
